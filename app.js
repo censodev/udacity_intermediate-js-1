@@ -1,5 +1,7 @@
-
-// Create Dino Constructor
+/**
+ * @description Represents a dino
+ * @constructor
+ */
 class Dino {
     constructor(data) {
         this.species = data.species;
@@ -12,8 +14,24 @@ class Dino {
     }
 }
 
+/**
+ * @description Represents a human
+ * @constructor
+ */
+class Human {
+    constructor(data) {
+        this.name = data.name
+        this.feet = data.feet
+        this.inches = data.inches
+        this.weight = data.weight
+        this.diet = data.diet
+    }
+}
 
-// Create Dino Objects
+/**
+ * @description Create dinos array from JSON data
+ * @returns {array} Dinos array
+ */
 async function createDinos() {
     // const dinoData = await fetch(`./dino.json`).then(rs => rs.json())
     const dinoData = {
@@ -95,19 +113,10 @@ async function createDinos() {
     return dinoData.Dinos.map(data => new Dino(data))
 }
 
-
-// Create Human Object
-class Human {
-    constructor(data) {
-        this.name = data.name
-        this.feet = data.feet
-        this.inches = data.inches
-        this.weight = data.weight
-        this.diet = data.diet
-    }
-}
-
-// Use IIFE to get human data from form
+/**
+ * @description Create a Human object from form data
+ * @returns {Human} Human object from form data
+ */
 function getHumanFromForm() {
     return new Human({
         name: document.querySelector('#name').value,
@@ -118,8 +127,12 @@ function getHumanFromForm() {
     })
 }
 
-// Create Dino Compare Method 1
-// NOTE: Weight in JSON file is in lbs, height in inches.
+/**
+ * @description Compare dino's weight to human's weight
+ * @param  {Dino} dino
+ * @param  {Human} human
+ * @returns {number} 1: dino > human, -1: dino < human, 0: dino = human
+ */
 function compareDinoWeight(dino, human) {
     return dino.weight > human.weight
         ? 1
@@ -127,8 +140,12 @@ function compareDinoWeight(dino, human) {
 }
 
 
-// Create Dino Compare Method 2
-// NOTE: Weight in JSON file is in lbs, height in inches.
+/**
+ * @description Compare dino's height to human's height
+ * @param  {Dino} dino
+ * @param  {Human} human
+ * @returns {number} 1: dino > human, -1: dino < human, 0: dino = human
+ */
 function compareDinoHeight(dino, human) {
     const humanHeight = human.feet * 12 + human.inches;
     return dino.height > humanHeight
@@ -136,13 +153,21 @@ function compareDinoHeight(dino, human) {
         : dino.height < humanHeight ? -1 : 0;
 }
 
-// Create Dino Compare Method 3
-// NOTE: Weight in JSON file is in lbs, height in inches.
+/**
+ * @description Compare dino's diet to human's diet
+ * @param  {Dino} dino
+ * @param  {Human} human
+ * @returns {boolean} Check if dino's diet is the same as human's diet
+ */
 function compareDinoDiet(dino, human) {
     return dino.diet == human.diet.toLowerCase();
 }
 
-// Generate Tiles for each Dino in Array
+/**
+ * @description Generate a tile DOM for dino
+ * @param  {Dino} dino
+ * @returns {string} Tile DOM in string
+ */
 function genTile4Dino(dino) {
     return `
         <div class="grid-item">
@@ -153,6 +178,11 @@ function genTile4Dino(dino) {
         `;
 }
 
+/**
+ * @description Generate a tile DOM for human
+ * @param  {Human} human
+ * @returns {string} Tile DOM in string
+ */
 function genTile4Human(human) {
     return `
         <div class="grid-item">
@@ -163,16 +193,28 @@ function genTile4Human(human) {
         `;
 }
 
-// Add tiles to DOM
+/**
+ * @description Render a tile on DOM
+ * @param  {string} tile
+ * @returns {void}
+ */
 function renderTile(tile) {
     document.querySelector('#grid').innerHTML += tile;
 }
 
-// Remove form from screen
+/**
+ * @description Remove user input form from DOM
+ * @returns {void}
+ */
 function removeForm() {
     document.querySelector('#dino-compare').style.display = 'none';
 }
-
+/**
+ * @description Random dino fact depend on human data
+ * @param  {Dino} dino
+ * @param  {Human} human
+ * @returns {void}
+ */
 function randomDinoFact(dino, human) {
     if (dino.species === 'Pigeon')
         return;
@@ -204,6 +246,11 @@ function randomDinoFact(dino, human) {
     dino.fact += ' ' + extraFact;
 }
 
+/**
+ * @description Shuffle an array randomly
+ * @param  {array} array
+ * @returns {array} shuffled array
+ */
 function shuffle(array) {
     for (let i = 0; i < array.length; i++) {
         const iShuffle = Math.floor(Math.random() * array.length);
